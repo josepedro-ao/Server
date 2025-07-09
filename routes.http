@@ -1,0 +1,181 @@
+
+# @name create-user
+GET http://localhost:3333/userProfile
+
+###
+# @name create-user
+GET http://localhost:3333/groupUser/getByUserId/1
+###
+# @name get-playlistByUserId
+GET http://localhost:3003/playlistMidia/getByUserId/1
+###
+# @name get-midiaByUserId
+GET http://localhost:3333/playlistMidia/getMidiaById/1
+###
+# @name get-getCommentByIdMidia
+GET http://localhost:3333/critica/getMidiaById/2
+
+###
+# @name create-group
+POST http://localhost:3003/group/create
+Content-Type: application/json
+
+{   
+  "nome": "string1",
+  "estado": "string",
+  "tipo": "string"
+}
+###
+# @name create-userProfile
+POST http://localhost:3333/userProfile/create
+Content-Type: application/json
+
+{
+     
+   "id_usuario": 1,
+  "username": "string2323",
+  "senha": "string",
+  "email": "20200860@isptec.co.ao"
+  }
+###
+POST http://localhost:3333/critica/create
+Content-Type: application/json
+
+{
+     
+   
+  "descricao": "string",
+  "id_perfil_usuario": 1,
+  "id_midia": 2
+}
+ 
+###
+# @name create-groupUser
+POST http://localhost:3003/groupUser/create
+Content-Type: application/json
+
+{
+     
+  "id_grupo": 2,
+  "id_perfil_usuario": 1,
+  "id_papel_usuario_grupo": 1,
+  "data_entrada": "2025-06-27 17:53:45"
+}
+###
+# @name create-groupUser
+POST http://localhost:3333/groupUser/create
+Content-Type: application/json
+
+{
+     
+  "id_grupo": 2,
+  "id_perfil_usuario": 1,
+  "id_papel_usuario_grupo": 1,
+  "data_entrada": "2025-06-27 17:53:45"
+}
+###
+POST  http://localhost:3333/playlistUsuario/create
+Content-Type: application/json
+
+{"id_perfil_usuario":1,"id_playlist":3}
+###
+POST  http://localhost:3333/playlistUsuario/create
+Content-Type: application/json
+
+{"id_perfil_usuario":1,"id_playlist":3}
+###
+# @name create-user
+POST http://localhost:3333/user/create
+Content-Type: application/json
+
+{
+     
+  "nome": "string",
+  "sobrenome": "string",
+  "senha": "string",
+  "email": "adrianonovo34@gmail.com"
+}
+###
+# @name create-playlistMedia
+POST http://localhost:3003/playlistMidia/create
+Content-Type: application/json
+
+{
+     
+  "id_midia": 2,
+  "id_perfil_usuario": 1,
+  "id_playlist": 1
+}
+###
+# @name create-playlist
+POST http://localhost:3003/playlist/create
+Content-Type: application/json
+
+{
+     
+  "nome": "string",
+  "data": "2025-06-27 17:53:45",
+  "visibilidade": "string",
+  "estado": false
+}
+###
+# @name create-media
+POST http://localhost:3003/midia/create
+Content-Type: application/json
+
+{
+     
+  "titulo": "strin2g",
+  "id_legenda": 1,
+  "id_genero_media": 1,
+  "id_tipo_media": 1,
+  "duracao": "string",
+  "arquivo": "string",
+  "id_formato_media": 1,
+  "tamanho": "erer",
+  "data": "",
+  "id_perfil_usuario": 1,
+  "estado": true
+}
+###
+# @name create-media
+POST http://localhost:3003/legenda/create
+Content-Type: application/json
+
+{
+  "arquivo": "string",
+   "estado": "string"
+
+}
+###
+# @name create-generoMedia
+POST http://localhost:3003/genero/create
+Content-Type: application/json
+
+{
+  "nome": "string"
+}
+###
+# @name create-generoMedia
+POST http://localhost:3003/tipoMidia/create
+Content-Type: application/json
+
+{
+  "nome": "string"
+}
+###
+# @name create-generoMedia
+POST http://localhost:3003/formatoMedia/create
+Content-Type: application/json
+
+{
+  "nome": "string"
+}
+###
+# @name create-generoMedia
+POST http://localhost:3003/formatoMedia/create
+Content-Type: application/json
+
+{
+  "nome": "string"
+}
