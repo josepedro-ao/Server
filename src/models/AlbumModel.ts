@@ -35,6 +35,10 @@ Album.init(
       type: DataTypes.STRING(255),
       allowNull: false,
     },
+    genero: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
+    }
   },
   {
     sequelize: connection,

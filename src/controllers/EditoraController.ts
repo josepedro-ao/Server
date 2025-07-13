@@ -9,12 +9,26 @@ class EditoraController {
    */
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const novaEditora = req.body;
-      const editoraCriada = await Editora.create(novaEditora);
-      res.status(201).json(editoraCriada);
+      const { nome } = req.body;
+
+      if (!nome) {
+        res.status(400).json({ error: "O campo 'nome' é obrigatório" });
+        return;
+      }
+
+      // Criando apenas com o nome, os outros campos são automáticos
+      const editoraCriada = await Editora.create({ nome });
+      
+      res.status(201).json({
+        id_editora: editoraCriada.id_editora,
+        nome: editoraCriada.nome
+      });
     } catch (error) {
       console.error("Erro ao criar editora:", error);
-      res.status(500).json({ error: "Erro ao criar editora" });
+      res.status(500).json({ 
+        error: "Erro ao criar editora",
+        details: error instanceof Error ? error.message : String(error)
+      });
     }
   }
 

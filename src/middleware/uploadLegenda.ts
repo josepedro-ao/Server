@@ -1,5 +1,15 @@
 import { Router, Request } from "express";
 import multer from "multer";
+import fs from "fs";
+import path from "path";
+import crypto from "crypto";
+
+const uploadPath = path.resolve(__dirname, "..", "..", "public", "uploads", "subtitles");
+
+// Cria o diretório, se não existir
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 const subtitleStorage = multer.diskStorage({
   destination: (

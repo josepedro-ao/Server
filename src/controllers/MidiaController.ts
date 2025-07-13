@@ -6,7 +6,7 @@ import UserProfile from "../models/UserProfile";
 import GeneroMedia from "../models/GeneroMediaModel";
 import fs from "fs";
 import path from "path";
-import { comrpessMidia } from "../services/compress";
+import { compressMidia } from "../services/compress";
 
 class MidiaController {
   /**
@@ -17,9 +17,15 @@ class MidiaController {
 
   async create(req: Request, res: Response): Promise<void> {
     try {
-      const novoArquivo = await comrpessMidia(
+      const novoArquivo = await compressMidia(
         req.file ? req.file.path : "Sem arquivo"
       );
+      let nome1 = "";
+      if (novoArquivo) {
+        nome1 = path.basename(novoArquivo);
+      }
+      const formato = path.extname(nome1).replace('.', '');
+      console.log("Novo arquivi:", novoArquivo);
       const {
         data: {
           titulo,
@@ -35,36 +41,39 @@ class MidiaController {
           descricao,
           visibilidade,
           imagem,
+          arquivo
         },
       } = req.body;
 
       if (!imagem) {
         res.status(400).send("No image provided");
-      }
-      const matches = imagem.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+      } else {
+        const matches = imagem.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
       if (!matches) {
         res.status(400).send("Invalid image format");
+      } else {
+        const imageBuffer = Buffer.from(matches[2], "base64");
+    
+        const novaMidia = await Midia.create({
+          titulo,
+          id_legenda,
+          id_genero_media,
+          id_tipo_media,
+          duracao,
+          formato_media: formato,
+          tamanho,
+          data,
+          id_perfil_usuario,
+          estado,
+          imagem: imageBuffer,
+          descricao,
+          visibilidade,
+          arquivo: nome1,
+        });
+    
+        res.status(201).json({ message: "Midia inserida", data: novaMidia });
       }
-
-      const imageBuffer = Buffer.from(matches[2], "base64");
-      const novaMidia = await Midia.create({
-        titulo,
-        id_legenda,
-        id_genero_media,
-        id_tipo_media,
-        duracao,
-        formato_media,
-        tamanho,
-        data,
-        id_perfil_usuario,
-        estado,
-        imagem: imageBuffer,
-        descricao,
-        visibilidade,
-        arquivo: novoArquivo.split("/")[2],
-      });
-
-      res.status(201).json({ message: "Midias inserida", data: novaMidia });
+    }
     } catch (error) {
       console.error("Erro ao criar mídia:", error);
       res.status(500).json({ error: "Erro ao criar mídia" });

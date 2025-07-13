@@ -1,5 +1,15 @@
 import multer from "multer";
 import { Router, Request } from "express";
+import fs from "fs";
+import path from "path";
+import crypto from "crypto";
+
+const uploadPath = path.resolve(__dirname, "..", "..", "public", "uploads", "midia");
+
+// Cria o diretório, se não existir
+if (!fs.existsSync(uploadPath)) {
+  fs.mkdirSync(uploadPath, { recursive: true });
+}
 
 const midiaStorage = multer.diskStorage({
   destination: (

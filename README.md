@@ -77,4 +77,9 @@ npx sequelize-cli db:migrate
 
 ```
 
----
+Executar:
+
+```bash
+npm run start
+
+```

@@ -67,7 +67,7 @@ Midia.init(
     },
     formato_media: {
       type: DataTypes.STRING(50),
-      allowNull: true,
+      allowNull: false,
     },
     tamanho: {
       type: DataTypes.STRING(50),

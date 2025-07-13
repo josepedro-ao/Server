@@ -1,21 +1,21 @@
+// src/models/EditoraModel.ts
 import { DataTypes, Model, Optional } from "sequelize";
-import sequelize from "../database";
+import connection from "../database/index";
 
-// Tipos
 interface EditoraAttributes {
-  id_editora: number;
+  id_editora?: number;
   nome: string;
 }
 
-interface EditoraCreationAttributes extends Optional<EditoraAttributes, "id_editora"> {}
+// Interface para criação, tornando id_editora opcional
+interface EditoraCreationAttributes extends Optional<EditoraAttributes, 'id_editora'> {}
 
-// Modelo Sequelize tipado corretamente
-class Editora extends Model<EditoraAttributes, EditoraCreationAttributes>
+class Editora extends Model<EditoraAttributes, EditoraCreationAttributes> 
   implements EditoraAttributes {
   public id_editora!: number;
   public nome!: string;
-
-  public readonly estado!: Boolean;
+  
+  // Timestamps serão adicionados automaticamente
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 }
@@ -30,12 +30,22 @@ Editora.init(
     nome: {
       type: DataTypes.STRING(100),
       allowNull: false,
-    },
+      validate: {
+        notEmpty: {
+          msg: "O nome da editora é obrigatório"
+        }
+      }
+    }
   },
   {
-    sequelize, // <- aqui importa direto de database/index.ts
+    sequelize: connection,
+    modelName: 'Editora',
     tableName: "editora",
-    timestamps: true,
+    timestamps: true, // Habilita os timestamps
+    createdAt: 'createdAt', // Nome exato da coluna no BD
+    updatedAt: 'updatedAt', // Nome exato da coluna no BD
+    underscored: false, // Desativa a conversão para snake_case
+    freezeTableName: true // Evita pluralização
   }
 );
 
