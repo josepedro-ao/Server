@@ -1,14 +1,23 @@
-import { DataTypes, Model } from "sequelize";
-import connection from "../database/index";
+import { DataTypes, Model, Optional } from "sequelize";
+import sequelize from "../database";
 
+// Tipos
 interface EditoraAttributes {
-  id_editora?: number;
-  nome?: string;
+  id_editora: number;
+  nome: string;
 }
 
-class Editora extends Model implements EditoraAttributes {
-  id_editora?: number;
-  nome?: string;
+interface EditoraCreationAttributes extends Optional<EditoraAttributes, "id_editora"> {}
+
+// Modelo Sequelize tipado corretamente
+class Editora extends Model<EditoraAttributes, EditoraCreationAttributes>
+  implements EditoraAttributes {
+  public id_editora!: number;
+  public nome!: string;
+
+  public readonly estado!: Boolean;
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
 
 Editora.init(
@@ -24,7 +33,7 @@ Editora.init(
     },
   },
   {
-    sequelize: connection,
+    sequelize, // <- aqui importa direto de database/index.ts
     tableName: "editora",
     timestamps: true,
   }
